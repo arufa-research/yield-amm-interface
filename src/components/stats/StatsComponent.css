@@ -1,0 +1,168 @@
+.contract-info-wrapper {
+  width: 100%;
+  text-align: left;
+  z-index: 10;
+  color: white;
+}
+.left-wrapper{
+  display: flex;
+  flex-direction: column;
+  flex: 0.6;
+}
+.wrapper-1 {
+  /* box-sizing: border-box; */
+  padding: 4rem 5%;
+  padding-bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-grow: 1;
+  /* justify-content: center; */
+  row-gap: 1.5rem;
+  grid-row-gap: 1.5rem;
+  /* max-width: 1142px; */
+  overflow-y: auto;
+  /* height: 100vh; */
+  gap: 20px;
+}
+.info-card-2 {
+  padding: 32px;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  overflow-x: auto;
+  text-align: center;
+  background-color: var(--card-background);
+  border-radius: 12px;
+}
+.right-wrapper{
+  display: flex;
+  flex-direction: column;
+  flex: 0.4;
+  justify-content: space-between;
+}
+.info-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  /* padding: 16px; */
+  /* margin: 1rem 0; */
+}
+
+/* .info-card button {
+  margin: 0 auto;
+  background-color: #a69cac;
+  margin-top: 48px;
+  margin-bottom: 48px;
+} */
+
+.amt-heading {
+  /* background-color: #161b33; */
+  font-weight: bold;
+}
+.staked-amount-item {
+  background-color: #161b33;
+  width: 220px;
+  border-radius: 12px;
+  padding: 20px 20px;
+}
+.staked-amount-item label {
+  font-size: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.staked-amount-item div {
+  font-size: 30px;
+  font-family: "Rajdhani", sans-serif;
+}
+/* .info-card-content > div:nth-child(1) {
+	  color: lightgray;
+	} */
+
+a.val-address-link {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.521);
+  padding: 5px 15px;
+  border-radius: 15px;
+  /* max-width: 100px; */
+  overflow: hidden;
+}
+a.val-address-link:hover {
+  color: red;
+}
+.info-card-content .time-hand {
+  color: grey;
+  font-size: medium;
+}
+
+.jcs {
+  justify-content: flex-start;
+  column-gap: 1rem;
+}
+.jcs-child__value {
+  flex-grow: 1;
+  text-align: right;
+}
+.progress-bar-wrapper {
+  border-radius: 20px;
+  background-color: white;
+}
+.progress-bar {
+  background: #f2545b;
+  border-radius: 20px;
+  height: 5px;
+}
+.validators-heading {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+  color: rgb(202, 202, 202);
+  /* padding-bottom:10px ; */
+  /* border-bottom: 1px solid #ffffff5b; */
+}
+.validators-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  background-color: #161b33;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.validators-card {
+  padding: 1rem;
+  row-gap: 0;
+}
+.list-numberings {
+  font-family: "Rajdhani";
+  font-size: 1.2rem;
+  color: rgb(179, 179, 179);
+}
+.amount-with-unit span:nth-child(1) {
+  font-family: "Rajdhani";
+  font-size: 1.2rem;
+}
+.amount-with-unit span:nth-child(2) {
+  color: rgb(179, 179, 179);
+}
+
+@media only screen and (max-width: 540px) {
+  .info-heading {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* .info-card-content {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1rem;
+  } */
+
+  .time-hand {
+    font-size: 0.8rem !important;
+  }
+}
