@@ -4,7 +4,11 @@
     "contract_code_hash": ""
   },
   "mars_adapter": {
-    "contract_addr": "",
+    "contract_addr": "osmo1nt36llqphns00fdqwk2t9xfz5k72c769s0wfcw82n44803akujpq9vc28y",
+    "contract_code_hash": ""
+  },
+  "yb_token": {
+    "contract_addr": "osmo1gjd0p6834jq94wxk6qgsvzm7zvf869e2mr09epqk6xqg8868khrs6kxyay",
     "contract_code_hash": ""
   },
   "splitter": {
