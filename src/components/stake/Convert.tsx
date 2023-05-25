@@ -13,7 +13,6 @@ import sejuno from "../../assets/img/sejuno.png";
 // import { UserContext } from "../../context/user-context";
 import "./convert.css";
 import { ToastContainer, toast } from "react-toastify";
-import DefiInput from "../defi/defi-input/DefiInput";
 import { useToken } from "../../hooks/useToken";
 import { useStake } from "../../hooks/useStake";
 import { queryClientState } from "../../context/queryClientState";
@@ -255,55 +254,6 @@ const Convert = (props: any) => {
           Convert {swapToken === "sejuno" ? " seJUNO " : " bJUNO "} To{" "}
           {swapToken === "sejuno" ? " bJUNO " : " seJUNO "}
         </div>
-      </div>
-      <div
-        style={{
-          flexDirection: swapToken === "bjuno" ? "column" : "column-reverse",
-        }}
-        className="convert-input-wrapper-container"
-      >
-        <DefiInput
-          onInputChange={handleInputChange}
-          value={inputValue ? bTokenInputAmount : ""}
-          convertTab={true}
-          activeToken={swapToken}
-          setValue={maxHandler}
-          tokenName="bJUNO"
-          tokenBalance={bBalance}
-          logoSrc={bjuno}
-          name="li-1"
-          showError={
-            swapToken === "bjuno" &&
-            inputValue &&
-            Number(bTokenInputAmount) > Number(bBalance)
-          }
-        />
-        <div
-          onClick={handleSwitch}
-          className={`exchange-arrow-wrapper ${
-            swapToken === "bjuno" ? "exchange-icon-rotate" : ""
-          }`}
-        >
-          <FontAwesomeIcon color="gold" icon={faArrowUp} />
-          <FontAwesomeIcon icon={faArrowDown} />
-        </div>
-
-        <DefiInput
-          onInputChange={handleInputChange}
-          convertTab={true}
-          setValue={maxHandler}
-          activeToken={swapToken}
-          value={inputValue ? seTokenInputAmount : ""}
-          tokenName="seJUNO"
-          tokenBalance={seBalance}
-          logoSrc={sejuno}
-          name="li-2"
-          showError={
-            swapToken === "sejuno" &&
-            inputValue &&
-            Number(seTokenInputAmount) > Number(seBalance)
-          }
-        />
       </div>
       <div className="convert-rate-value-wrapper">
         <div className="convert-rate">

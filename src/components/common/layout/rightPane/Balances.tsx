@@ -18,13 +18,11 @@ import InfoBubble from "../../information/InfoBubble";
 import { walletState } from "../../../../context/walletState";
 import "./Balances.css";
 import { useWithdraw } from "../../../../hooks/useWithdraw";
-import { useRewards } from "../../../../hooks/useRewards";
 import { queryClientState } from "../../../../context/queryClientState";
 import { useToken } from "../../../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import UnstakingBtn from "./UnstakingBtn";
-import RewardBtn from "./RewardBtn";
 import { networkState } from "../../../../context/networkState";
 import GetBalance from "../../balance/GetBalance";
 import { coinConvert } from "../../../../utils/common";
@@ -46,8 +44,6 @@ function Balances() {
   const [totalPending, setTotalPending] = useState("");
   const [activeWindowAmount, setActiveWindowAmount] = useState("");
   const [bTokenClaimAmount, setTokenClaimAmount] = useState("");
-  const { getPendingRewards } = useRewards();
-  const [rewards, setRewards] = useState<string | undefined>("");
   const { queryClient } = useRecoilValue(queryClientState);
   const token = useToken();
   const currentWTPage = 11;
@@ -62,10 +58,8 @@ function Balances() {
     const seBalance = await token.getBalance("se_token");
     const bBalance = await token.getBalance("b_token");
     const unstaking = await getUnstakingValues();
-    const rewards = await getPendingRewards();
     setSeTokenBalance(seBalance as string);
     setBTokenBalance(bBalance as string);
-    setRewards(rewards);
     setUnstakingAmount(coinConvert(Math.round(Number(unstaking?.unstaking)), 6, "human"));
     setUnstakedAmount(unstaking?.unstaked);
   };
@@ -292,29 +286,6 @@ function Balances() {
       </div>
       {/* <div className="balance-logo-wrapper">
       </div> */}
-      {!(selected===3) ? <></> : <div >
-      <div className="balance-wrapper">
-        <div className="logo-balance logo-balance__ready">
-          <div className="stk-balance-wrapper dull">
-            <div className="stk-balance">
-              {rewards ??
-                (!address ? (
-                  <InfoBubble
-                    edge={true}
-                    style={{ right: "0px", top: "-10px" }}
-                    content="Connect Keplr wallet to see this balance"
-                  />
-                ) : (
-                  "-"
-                ))}
-            </div>
-            <div className="token-name"><img src={INJ} alt="arch" />
-            {baseSymbol}</div>
-          </div>
-        </div>
-        <RewardBtn />
-      </div>
-      </div>}
       </div>
       <ToastContainer style={{ textAlign: "left" }} />
       {/* <button onClick={handleTakeTour} className="tour-btn">

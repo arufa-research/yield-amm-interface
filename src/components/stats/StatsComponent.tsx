@@ -3,16 +3,12 @@ import { useRecoilValue } from "recoil";
 
 import LoadingSpinner from "../../components/common/loadingSpinner/loadingSpinner";
 import { queryClientState } from "../../context/queryClientState";
-import { useRewards } from "../../hooks/useRewards";
 import { useStats } from "../../hooks/useStats";
-import { useWithdraw } from "../../hooks/useWithdraw";
 import Timer from "../../utils/timer/Timer";
-// import { UserContext } from "../../context/user-context";
 import ContractInfoItems from "./ContractInfoItems";
 import "./StatsComponent.css";
 import ValidatorListItems from "./ValidatorListItems";
 import WindowComponent from "./WindowComponent";
-import { useToken } from "../../hooks/useToken";
 import { walletState } from "../../context/walletState";
 import PulseLoader from "react-spinners/PulseLoader";
 import { responsiveState } from "../../context/responsiveState";
@@ -31,9 +27,6 @@ function StatsComponent() {
   time.setSeconds(time.getSeconds() + 120);
 
   const { getContractInfo, getValidatorsList, getWindowInfo } = useStats();
-  const { getPendingRewards, doClaim } = useRewards();
-  const { getUnstakingValues, doWithdraw } = useWithdraw();
-  const { getBalance, getBalanceByAddress } = useToken();
 
   useEffect(() => {
     (async () => {

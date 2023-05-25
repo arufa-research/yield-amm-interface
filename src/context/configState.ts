@@ -2,17 +2,14 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { ChainInfo, contractInfo } from "../types/configTypes";
 
-import junoMainnetChainInfo from "../config/juno_mainnet/chain_info.json";
-import junoMainnetOtherContracts from "../config/juno_mainnet/other_contracts.json";
+import osmosisTestnetChainInfo from "../config/osmosis_testnet/chain_info.json";
+import osmosisTestnetOtherContracts from "../config/osmosis_testnet/other_contracts.json";
 
-// import junoTestnetChainInfo from "../config/juno_testnet/chain_info.json";
-// import junoTestnetOtherContracts from "../config/juno_testnet/other_contracts.json";
-
-import injectiveTestnetChainInfo from "../config/injective_testnet/chain_info.json";
-import injectiveTestnetOtherContracts from "../config/injective_testnet/other_contracts.json";
+import junoTestnetChainInfo from "../config/juno_testnet/chain_info.json";
+import junoTestnetOtherContracts from "../config/juno_testnet/other_contracts.json";
 
 const readConfig = () => {
-  let network: string = "InjectiveTestnet";
+  let network: string = "OsmosisTestnet";
   if (localStorage.getItem("networkState") !== null) {
     network = localStorage.getItem("networkState") as string;
   }
@@ -21,8 +18,8 @@ const readConfig = () => {
   // which updates the config recoil state on network selection
   // that reads the network variable from recoil and it reflected in the app
 
-  const chainInfo = (network === "JunoMainnet")? junoMainnetChainInfo: injectiveTestnetChainInfo;
-  const otherContracts = (network === "JunoMainnet")? junoMainnetOtherContracts: injectiveTestnetOtherContracts;
+  const chainInfo = (network === "OsmosisTestnet")? osmosisTestnetChainInfo: junoTestnetChainInfo;
+  const otherContracts = (network === "OsmosisTestnet")? osmosisTestnetOtherContracts: junoTestnetOtherContracts;
 
   let otherContractsMap: Record<string, contractInfo> = {};
   Object.entries(otherContracts).forEach(([contractName, value]) => {

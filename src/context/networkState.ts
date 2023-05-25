@@ -5,10 +5,10 @@ export const networkState = atom<{
 }>({
   key: "networkState",
   // default: {
-  //   network: (localStorage.getItem("networkState") !== null)? localStorage.getItem("networkState") as string: "InjectiveTestnet",
+  //   network: (localStorage.getItem("networkState") !== null)? localStorage.getItem("networkState") as string: "OsmosisTestnet",
   // },
   default: {
-    network:"InjectiveTestnet",
+    network:"OsmosisTestnet",
   },
   dangerouslyAllowMutability: true,
 });

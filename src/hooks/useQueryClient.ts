@@ -1,8 +1,8 @@
 import { useSetRecoilState } from "recoil";
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
-import { queryClientState } from "../context/queryClientState";
 import { useChainInfo } from "./useChainInfo";
+import { queryClientState } from "../context/queryClientState";
 
 export const useQueryClient = () => {
   const setQueryClientState = useSetRecoilState(queryClientState);

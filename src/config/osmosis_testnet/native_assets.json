@@ -1,0 +1,18 @@
+{
+  "axlUSDC": {
+    "denom": "ibc/idjfidjfi",
+    "decimals": 6
+  },
+  "marsUSDC": {
+    "denom": "marsUSDC",
+    "decimals": 6
+  },
+  "pplUSDC": {
+    "denom": "pplUSDC",
+    "decimals": 6
+  },
+  "yldUSDC": {
+    "denom": "yldUSDC",
+    "decimals": 6
+  }
+}

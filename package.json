@@ -1,5 +1,5 @@
 {
-  "name": "stakeeasy-interface",
+  "name": "fixedfi-interface",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -31,7 +31,6 @@
     "react-timer-hook": "^3.0.5",
     "react-toastify": "^9.1.1",
     "recoil": "^0.7.6",
-    "secretjs": "^1.6.6",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
   },

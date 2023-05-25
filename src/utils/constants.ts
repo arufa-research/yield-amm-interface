@@ -1,7 +1,7 @@
 
 export const networkConstants: Record<string, any> = {
   JunoMainnet: {
-    baseDenom: "ujuno",
+    baseDenom: "uosmo",
     baseSymbol: "JUNO",
     networkType: "Mainnet",
     mintscanPrefix: "https://mintscan.io/juno/txs/",
@@ -48,6 +48,42 @@ export const networkConstants: Record<string, any> = {
   },
   JunoTestnet: {
 
+  },
+  OsmosisTestnet: {
+    baseDenom: "uosmos",
+    baseSymbol: "OSMO",
+    networkType: "Testnet",
+    mintscanPrefix: "https://mintscan.io/osmosis/txs/",
+
+    defaultGas: {
+      native_swap: "225000",
+      snip_swap: "255000",
+      add_liquidity: "265000",
+      remove_liquidity: "225000",
+      ibc_deposit: "95000",
+      ibc_withdraw: "95000",
+      snip_transfer: "55000",
+      snip_send: "75000",
+      snip_allowance: "55000",
+      create_viewing_key: "55000",
+      native_transfer: "25000",
+    },
+
+    VALIDATORS: {
+      "junovaloper1dru5985k4n5q369rxeqfdsjl8ezutch8mc6nx9": "Highlander | ChainTools",
+      "junovaloper196ax4vc0lwpxndu9dyhvca7jhxp70rmcqcnylw": "SG-1",
+      "junovaloper194v8uwee2fvs2s8fa5k7j03ktwc87h5ym39jfv": "Disperze",
+      "junovaloper10wxn2lv29yqnw2uf4jf439kwy5ef00qdelfp7r": "kingnodes 👑",
+    },
+
+    denomConst: {
+      tokenSymbol: 'OSMO',
+      seTokenSymbol: 'seOSMO',
+      bTokenSymbol: 'bOSMO',
+      tokenDenom: 'uosmo',
+      seTokenDenom: 'seosmo',
+      bTokenDenom: 'bosmo'
+    }
   },
   InjectiveTestnet: {
     baseDenom: "inj",

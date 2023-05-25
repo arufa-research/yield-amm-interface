@@ -29,7 +29,7 @@ const WalletSection = () => {
   // use this when mainnet is ready too
   // const [value, setValue] = useState<string>(
   //   (localStorage.getItem("networkState") !== null)
-  //     ? localStorage.getItem("networkState") as string: "InjectiveTestnet"
+  //     ? localStorage.getItem("networkState") as string: "OsmosisTestnet"
   // );
   const [value, setValue] = useState<string>("Testnet");
 
@@ -83,12 +83,12 @@ const WalletSection = () => {
               JunoTestnet
             </div> */}
             <div
-              onClick={() => handleChange("InjectiveTestnet")}
+              onClick={() => handleChange("OsmosisTestnet")}
               className={`sortby-input ${
-                value === "InjectiveTestnet" ? "sortby-input__active" : ""
+                value === "OsmosisTestnet" ? "sortby-input__active" : ""
               }`}
             >
-              InjectiveTestnet
+              OsmosisTestnet
             </div>
           </div>
         ) : (

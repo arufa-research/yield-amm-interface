@@ -13,13 +13,13 @@ const WalletAddress = () => {
 //   const [theme, setTheme] = useState('Dark')
 // //   const [theme, setTheme] = useRecoilState<any>(themeState);
 
-//   // localStorage.setItem("theme", theme);
+//   // localStorage.setItem("fixedFiTheme", theme);
 
 //   const handleTheme = () => {
 //     if (theme === "Dark") {
 //       setTheme("Light");
 //     } else setTheme("Dark");
-//     localStorage.setItem("theme", theme);
+//     localStorage.setItem("fixedFiTheme", theme);
 //     // root?.classList.toggle("lighttheme");
 //   };
 

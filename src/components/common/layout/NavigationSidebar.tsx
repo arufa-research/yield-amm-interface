@@ -79,7 +79,7 @@ const NavigationSidebar = () => {
           <NavLinks />
         </div>
         <div className="ns-wrapper">
-          <RightPane />
+          {/* <RightPane /> */}
           <HeaderSocials />
         </div>
       </div>

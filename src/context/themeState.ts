@@ -8,6 +8,6 @@ export const themeState = atom<{
 
 }>({
   key: "themeState",
-  default: ((localStorage.getItem("theme")) === null || (localStorage.getItem("theme")) === undefined) ? "Dark" : (localStorage.getItem("theme")!),
+  default: ((localStorage.getItem("fixedFiTheme")) === null || (localStorage.getItem("fixedFiTheme")) === undefined) ? "Dark" : (localStorage.getItem("fixedFiTheme")!),
   dangerouslyAllowMutability: true,
 });

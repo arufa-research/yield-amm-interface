@@ -64,7 +64,7 @@
   --accent-color-1: #8041D2;
   --card-background:#423B5A;
 
-  --bg-img: url(./assets/img/bg_dark.png);
+  --bg-img: url(./assets/img/background.jpg);
   --gradient-left: #8A32C7;
   --gradient-right: #6B5DE4;
 
@@ -94,7 +94,7 @@
   --card-background: #F0EDDF;
   --gradient-left: #D3C2AD;
   --gradient-right: #EFEBDC;
-  --bg-img: url(./assets/img/bg_light.png);
+  --bg-img: url(./assets/img/Fixedfi_bg.png);
   --accent-color-1: #D3C2AD;
   --percent-input: #c7defa;
   --multicolor-left: #a500a8;

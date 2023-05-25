@@ -1,16 +1,15 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
-import { walletState } from "../context/walletState";
-import { networkConstants } from "../utils/constants";
-import { coinConvert, sleep } from "../utils/common";
-import { useContext } from "react";
-import { UserContext } from "../context/userState";
-import { useMessageToaster } from "./useMessageToaster";
-import { toast } from "react-toastify";
 import { useChainInfo } from "./useChainInfo";
+import { UserContext } from "../context/userState";
+import { walletState } from "../context/walletState";
+import { coinConvert, sleep } from "../utils/common";
+import { networkConstants } from "../utils/constants";
 import { networkState } from "../context/networkState";
-import { useNavigate } from "react-router-dom";
+import { useMessageToaster } from "./useMessageToaster";
 
 export interface Coin {
   readonly denom: string;
@@ -107,7 +106,7 @@ export const useConnectWallet = () => {
         const tmepdata = await offlineSigner.getAccounts();
         const temp = tmepdata[0]?.address;
         if (temp === address) {
-          await sleep(2);
+          await sleep(1);
         } else {
           navigate("/");
           window.location.reload();
