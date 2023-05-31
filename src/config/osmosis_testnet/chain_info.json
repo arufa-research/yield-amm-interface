@@ -1,8 +1,8 @@
 {
-  "chainId": "osmo-test-5",
+  "chainId": "osmo-test-4",
   "chainName": "Osmosis Testnet",
-  "rpc": "https://rpc.osmotest5.osmosis.zone/",
-  "rest": "https://lcd.osmotest5.osmosis.zone/",
+  "rpc": "https://rpc.testnet.osmosis.zone:443/",
+  "rest": "https://lcd.testnet.osmosis.zone/",
   "stakeCurrency": {
     "coinDenom": "OSMO",
     "coinMinimalDenom": "uosmo",

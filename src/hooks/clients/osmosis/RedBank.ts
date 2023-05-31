@@ -326,7 +326,7 @@ export interface MarsRedBankReadOnlyInterface {
     denom: string;
   }) => Promise<Uint128>;
 }
-export class MarsRedBankQueryClient implements MarsRedBankReadOnlyInterface {
+export class MarsRedBankQueryContract implements MarsRedBankReadOnlyInterface {
   client: CosmWasmClient;
   contractAddress: string;
 
@@ -618,7 +618,7 @@ export interface MarsRedBankInterface extends MarsRedBankReadOnlyInterface {
     enable: boolean;
   }, fee?: number | StdFee | "auto", memo?: string, funds?: Coin[]) => Promise<ExecuteResult>;
 }
-export class MarsRedBankClient extends MarsRedBankQueryClient implements MarsRedBankInterface {
+export class MarsRedBankContract extends MarsRedBankQueryContract implements MarsRedBankInterface {
   client: SigningCosmWasmClient;
   sender: string;
   contractAddress: string;
