@@ -1,5 +1,4 @@
 import { useState } from "react";
-import StakeMenu from "./stakeMenu";
 import { networkConstants } from "../../utils/constants";
 
 import "./stake.css";
@@ -62,7 +61,7 @@ function NewExchange() {
       {stake ? (
         <NewStakeMenu
           isConvert={convert}
-          name={`Stake ${networkConstants[network].denomConst.tokenSymbol}`}
+          name={`Deposit ${networkConstants[network].denomConst.tokenSymbol}`}
           placeholder={networkConstants[network].baseDenom}
           inputAmount={inputAmount}
           setInputAmount={(e) => {

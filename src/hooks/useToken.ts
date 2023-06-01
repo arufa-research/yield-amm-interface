@@ -25,7 +25,7 @@ export const useToken = () => {
     //   return balanceData[tokenName as keyof balanceStateType];
     // }
 
-    if (tokenName === baseDenom) {
+    if (tokenName === baseDenom || tokenName.startsWith("factory/")) {
       // native token
       const balResponse = await nativeToken.getBalance(tokenName);
       return balResponse;

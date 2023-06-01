@@ -17,12 +17,10 @@ import { networkConstants } from "../../../../utils/constants";
 import InfoBubble from "../../information/InfoBubble";
 import { walletState } from "../../../../context/walletState";
 import "./Balances.css";
-import { useWithdraw } from "../../../../hooks/useWithdraw";
 import { queryClientState } from "../../../../context/queryClientState";
 import { useToken } from "../../../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import UnstakingBtn from "./UnstakingBtn";
 import { networkState } from "../../../../context/networkState";
 import GetBalance from "../../balance/GetBalance";
 import { coinConvert } from "../../../../utils/common";
@@ -33,7 +31,6 @@ function Balances() {
   const [unstakingAmount, setUnstakingAmount] = useState<string | undefined>(
     ""
   );
-  const { getUnstakingValues } = useWithdraw();
   const [unstakedAmount, setUnstakedAmount] = useState<string | undefined>("");
 
   const [seTokenBalance, setSeTokenBalance] = useState("");
@@ -57,11 +54,8 @@ function Balances() {
   const getStakeData = async () => {
     const seBalance = await token.getBalance("se_token");
     const bBalance = await token.getBalance("b_token");
-    const unstaking = await getUnstakingValues();
     setSeTokenBalance(seBalance as string);
     setBTokenBalance(bBalance as string);
-    setUnstakingAmount(coinConvert(Math.round(Number(unstaking?.unstaking)), 6, "human"));
-    setUnstakedAmount(unstaking?.unstaked);
   };
 
   const handleSelected = (i: any) =>{
@@ -265,7 +259,6 @@ function Balances() {
             <div className="token-name">b${baseSymbol} rewards</div>
           </div>
         </div> */}
-        <UnstakingBtn />
       </div>
       </div>}
       </div>

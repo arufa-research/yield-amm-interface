@@ -14,9 +14,9 @@ import { useMessageToaster } from "./useMessageToaster";
 import { networkConstants } from "../utils/constants";
 import { queryClientState } from "../context/queryClientState";
 import {
-  SplitterContract,
-  SplitterQueryContract,
-} from "./clients/osmosis/SplitterContract";
+  MarsAdapterContract,
+  MarsAdapterQueryContract,
+} from "./clients/osmosis/MarsAdapterContract";
 import { networkState } from "../context/networkState";
 
 export interface Coin {
@@ -24,7 +24,7 @@ export interface Coin {
   readonly amount: string;
 }
 
-export const useSplit = () => {
+export const useAdapter = () => {
   const token = useToken();
   const config = useConfig();
   const toaster = useMessageToaster();
@@ -36,13 +36,13 @@ export const useSplit = () => {
   const baseDenom = networkConstants[network].baseDenom;
   const baseSymbol = networkConstants[network].baseSymbol;
 
-  const splitterQueryClient = new SplitterQueryContract(
+  const adapterQueryClient = new MarsAdapterQueryContract(
     queryClient as CosmWasmClient,
-    config.getOtherContract("splitter").contract_addr
+    config.getOtherContract("mars_adapter").contract_addr
   );
-  const splitterClient = new SplitterContract(
+  const adapterClient = new MarsAdapterContract(
     client as SigningCosmWasmClient,
-    config.getOtherContract("splitter").contract_addr
+    config.getOtherContract("mars_adapter").contract_addr
   );
 
   const checkQueryClient = async () => {
@@ -76,13 +76,13 @@ export const useSplit = () => {
   };
 
   /*
-   * Returns the state of splitter contract (ybToken deposited)
+   * Returns the state of mars adapter contract (token deposited in mars etc)
    */
-  const getSplitterState = async (): Promise<string | undefined> => {
+  const getAdapterState = async (): Promise<string | undefined> => {
     await checkQueryClient();
     try {
-      const splitterStateResponse = await splitterQueryClient.state();
-      return splitterStateResponse.state;
+      const adapterStateResponse = await adapterQueryClient.state();
+      return adapterStateResponse.state;
     } catch (error) {
       console.log(error);
       return;
@@ -90,9 +90,9 @@ export const useSplit = () => {
   };
 
   /*
-   * Deposit ybToken to get pToken and yToken
+   * Deposit Token to get ybToken
    */
-  const doSplit = async (
+  const doDeposit = async (
     tokenAmount: string,
     tokenType: string,
     gasValue?: string | undefined
@@ -100,7 +100,7 @@ export const useSplit = () => {
     await checkTxnClient();
     const tid = "Request Rejected";
     try {
-      let splitResponse = await splitterClient.deposit(
+      let depositResponse = await adapterClient.deposit(
         {
           userAddress: address as string,
           customFees: {
@@ -110,30 +110,30 @@ export const useSplit = () => {
           transferAmount: [ // send ybToken here, TODO: remove hardcoded denom
             {
               amount: coinConvert(tokenAmount, 6, "machine"),
-              denom: "factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars",
+              denom: "uosmo",
             },
           ],
         },
       );
 
-      if(!splitResponse || splitResponse===undefined){
-        toaster.Error("Failed to split OSMOmars");
-        toaster.Error((splitResponse.rawLog).substr(0,100) + "...");
+      if(!depositResponse || depositResponse===undefined){
+        toaster.Error("Failed to deposit OSMO");
+        toaster.Error((depositResponse.rawLog).substr(0,100) + "...");
       } else {
-        toast.success(`Split ${tokenAmount} ${baseSymbol} for ${tokenType}${baseSymbol}`);
+        toast.success(`Deposit ${tokenAmount} ${baseSymbol} for ${tokenType}${baseSymbol}`);
         toast.info(
-          splitResponse.transactionHash
-            ? TxnLinkComp(splitResponse.transactionHash)
+          depositResponse.transactionHash
+            ? TxnLinkComp(depositResponse.transactionHash)
             : "No hash",
           {
             closeOnClick: false,
           }
         );
       }
-      console.log("splitResponse: ", splitResponse);
-      return splitResponse;
+      console.log("depositResponse: ", depositResponse);
+      return depositResponse;
     } catch (error) {
-      toaster.Error("Failed to split.");
+      toaster.Error("Failed to deposit.");
       console.log(error);
       toast.info(tid, {
         type: "error",
@@ -150,9 +150,9 @@ export const useSplit = () => {
   };
 
   /*
-   * Deposit pToken and yToken to get ybToken
+   * Deposit ybToken to get Token
    */
-  const doMerge = async (
+  const doWithdraw = async (
     tokenAmount: string,
     tokenType: string,
     gasValue?: string | undefined
@@ -161,45 +161,41 @@ export const useSplit = () => {
     const tid = "Request Rejected";
 
     try {
-      let mergeResponse = await splitterClient.withdraw(
+      let withdrawResponse = await adapterClient.withdraw(
         {
           userAddress: address as string,
           customFees: {
             gas: gasValue !== undefined ? gasValue : defaultGas.add_liquidity,
             amount: [],
           },
-          transferAmount: [ // send pToken and yToken here, TODO: remove hardcoded denom
+          transferAmount: [ // send ybToken here, TODO: remove hardcoded denom
             {
               amount: coinConvert(tokenAmount, 6, "machine"),
-              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/yosmomars",
-            },
-            {
-              amount: coinConvert(tokenAmount, 6, "machine"),
-              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/posmomars",
+              denom: "factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars",
             },
           ],
         },
       );
 
-      if(!mergeResponse || mergeResponse===undefined){
-        toaster.Error("Failed to merge to OSMOmars");
-        toaster.Error((mergeResponse.rawLog).substr(0,100) + "...");
+      if(!withdrawResponse || withdrawResponse===undefined){
+        toaster.Error("Failed to withdraw to OSMO");
+        toaster.Error((withdrawResponse.rawLog).substr(0,100) + "...");
       } else {
-        toast.success(`Merged to ${tokenAmount} ${baseSymbol} for ${tokenType}${baseSymbol}`);
+        toast.success(`Withdrawn to ${tokenAmount} ${baseSymbol} for ${tokenType}${baseSymbol}`);
         toast.info(
-          mergeResponse.transactionHash
-            ? TxnLinkComp(mergeResponse.transactionHash)
+          withdrawResponse.transactionHash
+            ? TxnLinkComp(withdrawResponse.transactionHash)
             : "No hash",
           {
             closeOnClick: false,
           }
         );
       }
-      console.log("mergeResponse: ", mergeResponse);
-      return mergeResponse;
+      console.log("withdrawResponse: ", withdrawResponse);
+      return withdrawResponse;
     } catch (error) {
       console.log(error);
-      toaster.Error("Failed to merge");
+      toaster.Error("Failed to withdraw");
       toast.info(tid, {
         type: "error",
         closeOnClick: true,
@@ -216,8 +212,8 @@ export const useSplit = () => {
   };
 
   return {
-    getSplitterState,
-    doSplit,
-    doMerge,
+    getAdapterState,
+    doDeposit,
+    doWithdraw,
   };
 };

@@ -8,28 +8,19 @@ import {
 } from "react";
 import "./stake.css";
 
-// import Convert from "../pages/stake/convert";
 import { networkConstants } from "../../utils/constants";
 import { walletState } from "../../context/walletState";
 import { useConnectWallet } from "../../hooks/useTxnClient";
 import CommonButton from "../../components/common/buttons/CommonButton";
 import LoadingModal from "../../components/common/loading-modal/LoadingModal";
-import { useStake } from "../../hooks/useStake";
-import StakeHeader from "./StakeHeader";
-import StakeInputSlider from "./StakeInputSlider";
-import Convert from "./Convert";
+import { useAdapter } from "../../hooks/useAdapter";
+// import StakeInputSlider from "./StakeInputSlider";
 import { useToken } from "../../hooks/useToken";
 import { queryClientState } from "../../context/queryClientState";
 
-import juno from "../../assets/img/juno.png";
-import bJUNO from "../../assets/img/bjuno.png";
-import seJUNO from "../../assets/img/sejuno.png";
-import arch from "../../assets/img/Archway_logo.png";
-import barch from "../../assets/img/bconst_logo.png";
-import seArch from "../../assets/img/seARCH_logo.png";
-import INJ from "../../assets/img/INJ.png";
-import bINJ from "../../assets/img/bINJ.png";
-import seINJ from "../../assets/img/seINJ.png";
+import OSMO from "../../assets/img/osmo.png";
+import bINJ from "../../assets/img/osmo.png";
+import OSMOmars from "../../assets/img/osmomars.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
@@ -69,7 +60,7 @@ function NewStakeMenu(props: Props) {
   const connectWallet = useConnectWallet();
   const token = useToken();
 
-  const { getAPY, getTVL, getBRate, getSeRate, doStake, doUnstake, doConvert } = useStake();
+  const { getAdapterState, doDeposit, doWithdraw } = useAdapter();
 
   const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
   const [open, setOpen] = useState(false);
@@ -80,16 +71,14 @@ function NewStakeMenu(props: Props) {
   const [discardedTo, setDiscardedTo] = useState<any>(valueTo);
 
   const getStakeData = async () => {
-    // const apr = await getAPY();
-    // const tvl = await getTVL();
-    const seRate = await getSeRate();
+    const seRate = "1";
     console.log("seRate: ", seRate);
-    const bRate = await getBRate();
+    const bRate = "1";
     setRate(seRate as string);
     setBTokenRate(bRate as string);
 
-    const seBalance = await token.getBalance("se_token");
-    const bBalance = await token.getBalance("b_token");
+    const seBalance = await token.getBalance("factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars");
+    const bBalance = await token.getBalance("factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars");
 
     setSeBalance(seBalance as string);
     setBBalance(bBalance as string);
@@ -116,24 +105,24 @@ function NewStakeMenu(props: Props) {
 
   const doConvertHandler = async () => {
     // if (props.name === "Unstake") {
-    //   await doUnstake(props.inputAmount as string, unit);
+    //   await doWithdraw(props.inputAmount as string, unit);
     // } else {
-    //   await doStake(props.inputAmount as string, unit);
+    //   await doDeposit(props.inputAmount as string, unit);
     // }
     setIsLoading(true);
     if (valueTo === baseSymbol) {
       const unit = tokenUnit.substring(0, 2);
-      await doUnstake(props.inputAmount as string, unit);
+      await doWithdraw(props.inputAmount as string, unit);
     } else if (value === baseSymbol) {
       const unit = tokenUnitTo.substring(0, 2);
-      await doStake(props.inputAmount as string, unit);
+      await doDeposit(props.inputAmount as string, unit);
     } else {
       // convert
       if(value === denomConst.seTokenSymbol){
-        await doConvert(props.inputAmount as string, "se");
+        await doDeposit(props.inputAmount as string, "se");
       }
       else{
-        await doConvert(props.inputAmount as string, "b");
+        await doDeposit(props.inputAmount as string, "b");
       }
     }
     setIsLoading(false);
@@ -255,14 +244,12 @@ function NewStakeMenu(props: Props) {
   return (
     <>
       <div className="stake-menu">
-        {props.isConvert ? (
-          <Convert /> // TODO
-        ) : (
+        {(
           <>
             <div className="stake-menu-header">
               <div className="stake-menu-heading stake-menu__item">
                 {valueTo === baseSymbol
-                  ? "Unstake " + tokenUnit
+                  ? "Withdraw " + tokenUnit
                   : value === baseSymbol
                   ? props.name
                   : "Convert " + tokenUnit + " To "+ tokenUnitTo}
@@ -279,22 +266,22 @@ function NewStakeMenu(props: Props) {
                     <img
                       src={
                         tokenUnit === baseSymbol
-                          ? INJ
+                          ? OSMO
                           : tokenUnit === denomConst.seTokenSymbol
-                          ? seINJ
+                          ? OSMOmars
                           : bINJ
                       }
                       width={50}
                       alt="img"
                     />
-                    {props.name === `Stake ${denomConst.tokenSymbol}`
+                    {props.name === `Deposit ${denomConst.tokenSymbol}`
                       ? value
                       : props.name}
 
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       className="coinselecticon"
                       icon={faCaretDown}
-                    />
+                    /> */}
                     {open ? (
                       <div className="sortby-menu">
                         {discardedTo !== denomConst.seTokenSymbol && (
@@ -450,9 +437,9 @@ function NewStakeMenu(props: Props) {
                     <img
                       src={
                         tokenUnitTo === baseSymbol
-                          ? INJ
+                          ? OSMO
                           : tokenUnitTo === denomConst.seTokenSymbol
-                          ? seINJ
+                          ? OSMOmars
                           : bINJ
                       }
                       width={50}
@@ -460,10 +447,10 @@ function NewStakeMenu(props: Props) {
                     />
                     {/* {tokenUnit == denomConst.seTokenSymbol ? denomConst.seTokenSymbol : denomConst.bTokenSymbol} */}
                     {valueTo}
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       className="coinselecticon"
                       icon={faCaretDown}
-                    />
+                    /> */}
                     {openTo ? (
                       <div className="sortby-menu sortby-menu-To">
                         {discarded !== denomConst.seTokenSymbol && (
@@ -513,7 +500,7 @@ function NewStakeMenu(props: Props) {
                       value={getReceiveValue()}
                     />
                     <div className="stake-input-unit">
-                      {/* {props.name === `Stake ${denomConst.tokenSymbol}`
+                      {/* {props.name === `Deposit ${denomConst.tokenSymbol}`
                       ? tokenUnit
                       : denomConst.tokenSymbol} */}
                       {tokenUnitTo}
@@ -576,19 +563,19 @@ function NewStakeMenu(props: Props) {
               </div>
             ) : null}
 
-            {balance?.amount && sliderVisibility && (
-              <StakeInputSlider
-                name={props.name}
-                tokenUnit={tokenUnit}
-                percent={percent}
-                setPercent={handleChangePercent}
-                seBalance={seBalance}
-                bBalance={bBalance}
-                setInputAmount={(e: string) => {
-                  props.setInputAmount(e);
-                }}
-              />
-            )}
+            {/* {balance?.amount && sliderVisibility && (
+              // <StakeInputSlider
+              //   name={props.name}
+              //   tokenUnit={tokenUnit}
+              //   percent={percent}
+              //   setPercent={handleChangePercent}
+              //   seBalance={seBalance}
+              //   bBalance={bBalance}
+              //   setInputAmount={(e: string) => {
+              //     props.setInputAmount(e);
+              //   }}
+              // />
+            )} */}
             <div className="stake-rate new-stake-rate stake-menu__item">
               <div>EXCHANGE RATE</div>
               <div className="rate-flexbox">
@@ -681,7 +668,7 @@ function NewStakeMenu(props: Props) {
                   : loading
                   ? "Loading..."
                   : valueTo === baseSymbol
-                  ? "Unstake " + tokenUnit
+                  ? "Withdraw " + tokenUnit
                   : value === baseSymbol
                   ? props.name
                   : "Convert"}
@@ -690,7 +677,7 @@ function NewStakeMenu(props: Props) {
                   : loading
                   ? "Loading..."
                   : props.name === "Unstake"
-                  ? "Unstake " + tokenUnit
+                  ? "Withdraw " + tokenUnit
                   : props.name} */}
               </button>
             ) : (

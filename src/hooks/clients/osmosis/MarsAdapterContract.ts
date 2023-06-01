@@ -4,22 +4,17 @@ import { CosmWasmClient, SigningCosmWasmClient, ExecuteResult } from "@cosmjs/co
 export type ExecuteMsg = {
   deposit: {};
 } | {
-  update_yield_bearing_token: {
-    yield_bearing_token: Addr;
+  update_yield_bearing_denom: {
+    yield_bearing_denom: string;
   };
 } | {
-  receive: Cw20ReceiveMsg;
+  withdraw: {};
 };
 export type Addr = string;
-export type Uint128 = string;
-export type Binary = string;
-export interface Cw20ReceiveMsg {
-  amount: Uint128;
-  msg: Binary;
-  sender: string;
-}
 export interface InstantiateMsg {
   red_bank: Addr;
+  underlying_denom: string;
+  yield_bearing_denom: string;
 }
 export type QueryMsg = {
   user_deposit: {};
@@ -33,18 +28,20 @@ export type QueryMsg = {
 export interface ConfigResponse {
   owner: Addr;
   red_bank: Addr;
-  yield_bearing_token: Addr;
+  underlying_denom: string;
+  yield_bearing_denom: string;
 }
 export type Decimal = string;
+export type Uint128 = string;
 export interface StateResponse {
   exchange_rate: Decimal;
-  osmo_deposited: Uint128;
+  underlying_deposited: Uint128;
 }
 export interface TotalDepositResponse {
-  osmo_amount: Uint128;
+  underlying_amount: Uint128;
 }
 export interface UserDepositResponse {
-  osmo_amount: Uint128;
+  underlying_amount: Uint128;
 }
 export interface MarsAdapterReadOnlyInterface {
   userDeposit: () => Promise<any>;
@@ -94,7 +91,7 @@ export interface MarsAdapterInterface extends MarsAdapterReadOnlyInterface {
     memo?: string;
     transferAmount?: readonly Coin[];
   }) => Promise<any>;
-  updateYieldBearingToken: ({
+  updateYieldBearingDenom: ({
     userAddress,
     customFees,
     memo,
@@ -105,11 +102,11 @@ export interface MarsAdapterInterface extends MarsAdapterReadOnlyInterface {
     memo?: string;
     transferAmount?: readonly Coin[];
   }, {
-    yieldBearingToken
+    yieldBearingDenom
   }: {
-    yieldBearingToken: Addr;
+    yieldBearingDenom: string;
   }) => Promise<any>;
-  receive: ({
+  withdraw: ({
     userAddress,
     customFees,
     memo,
@@ -125,8 +122,8 @@ export class MarsAdapterContract extends MarsAdapterQueryContract implements Mar
   constructor(client: SigningCosmWasmClient, contractAddress: string, contractHash?: string) {
     super(client, contractAddress, contractHash);
     this.deposit = this.deposit.bind(this);
-    this.updateYieldBearingToken = this.updateYieldBearingToken.bind(this);
-    this.receive = this.receive.bind(this);
+    this.updateYieldBearingDenom = this.updateYieldBearingDenom.bind(this);
+    this.withdraw = this.withdraw.bind(this);
   }
 
   deposit = async ({
@@ -144,7 +141,7 @@ export class MarsAdapterContract extends MarsAdapterQueryContract implements Mar
       deposit: {}
     }, userAddress, customFees, memo, transferAmount);
   };
-  updateYieldBearingToken = async ({
+  updateYieldBearingDenom = async ({
     userAddress,
     customFees,
     memo,
@@ -155,17 +152,17 @@ export class MarsAdapterContract extends MarsAdapterQueryContract implements Mar
     memo?: string;
     transferAmount?: readonly Coin[];
   }, {
-    yieldBearingToken
+    yieldBearingDenom
   }: {
-    yieldBearingToken: Addr;
+    yieldBearingDenom: string;
   }): Promise<any> => {
     return await this.executeMsg({
-      update_yield_bearing_token: {
-        yield_bearing_token: yieldBearingToken
+      update_yield_bearing_denom: {
+        yield_bearing_denom: yieldBearingDenom
       }
     }, userAddress, customFees, memo, transferAmount);
   };
-  receive = async ({
+  withdraw = async ({
     userAddress,
     customFees,
     memo,
@@ -177,7 +174,7 @@ export class MarsAdapterContract extends MarsAdapterQueryContract implements Mar
     transferAmount?: readonly Coin[];
   }): Promise<any> => {
     return await this.executeMsg({
-      receive: {}
+      withdraw: {}
     }, userAddress, customFees, memo, transferAmount);
   };
 }

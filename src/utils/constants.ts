@@ -50,16 +50,16 @@ export const networkConstants: Record<string, any> = {
 
   },
   OsmosisTestnet: {
-    baseDenom: "uosmos",
+    baseDenom: "uosmo",
     baseSymbol: "OSMO",
     networkType: "Testnet",
     mintscanPrefix: "https://mintscan.io/osmosis/txs/",
 
     defaultGas: {
-      native_swap: "225000",
+      native_swap: "725000",
       snip_swap: "255000",
-      add_liquidity: "265000",
-      remove_liquidity: "225000",
+      add_liquidity: "765000",
+      remove_liquidity: "725000",
       ibc_deposit: "95000",
       ibc_withdraw: "95000",
       snip_transfer: "55000",
@@ -78,10 +78,10 @@ export const networkConstants: Record<string, any> = {
 
     denomConst: {
       tokenSymbol: 'OSMO',
-      seTokenSymbol: 'seOSMO',
+      seTokenSymbol: 'OSMOmars',
       bTokenSymbol: 'bOSMO',
       tokenDenom: 'uosmo',
-      seTokenDenom: 'seosmo',
+      seTokenDenom: 'osmomars',
       bTokenDenom: 'bosmo'
     }
   },

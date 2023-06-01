@@ -57,12 +57,10 @@ export const useNativeToken = () => {
     await checkAddressClient();
     console.log("tokenName: ", tokenName);
     try {
-      console.log("OKAY??");
       const balanceResponse = await (queryClient as CosmWasmClient).getBalance(
         address as string,
         tokenName
       );
-
       console.log("balanceResponse: ", balanceResponse);
 
       return coinConvert(balanceResponse.amount as string, 6, "human");
