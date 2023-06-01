@@ -70,7 +70,7 @@
   }
   body::-webkit-scrollbar-thumb {
     background-color: #3d3d57eb;
-    border-radius: 2px;
+    border-radius: 0px;
   }
   body::-webkit-scrollbar-thumb:hover {
     background-color: #505069;

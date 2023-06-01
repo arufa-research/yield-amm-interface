@@ -2,6 +2,7 @@ import { RecoilRoot, useRecoilValue } from "recoil";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Modal from "react-modal";
 import Stake from "./pages/stake/index";
+import Split from "./pages/split/index";
 // import RewardsPage from "./pages/rewards/index";
 // import WithdrawPage from "./pages/withdraw";
 // import PoolsPage from "./pages/pools/index";
@@ -36,8 +37,8 @@ function App() {
           <div className="component-container">
             <Routes>
               <Route path="/" element={<Stake />} />
-              {/* <Route path="/asset" element={<AssetPage />} />
-              <Route path="/pools/:id" element={<PoolsInfo />} /> */}
+              <Route path="/split" element={<Split />} />
+              {/* <Route path="/pools/:id" element={<PoolsInfo />} /> */}
               {/* <Route path="/rewards" element={<RewardsPage />} /> */}
               {/* <Route path="/withdraw" element={<WithdrawPage />} /> */}
               {/* <Route path="/rewards" element={<Rewards />} /> */}

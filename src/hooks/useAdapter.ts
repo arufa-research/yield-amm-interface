@@ -82,7 +82,8 @@ export const useAdapter = () => {
     await checkQueryClient();
     try {
       const adapterStateResponse = await adapterQueryClient.state();
-      return adapterStateResponse.state;
+      console.log("adapterStateResponse: ", adapterStateResponse);
+      return adapterStateResponse.exchange_rate;
     } catch (error) {
       console.log(error);
       return;

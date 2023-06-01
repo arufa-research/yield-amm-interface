@@ -1,7 +1,7 @@
 .loader,
 .loader:before,
 .loader:after {
-  border-radius: 50%;
+  border-radius: 0%;
   width: 2em;
   height: 2em;
   -webkit-animation-fill-mode: both;

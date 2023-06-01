@@ -79,9 +79,13 @@ export const networkConstants: Record<string, any> = {
     denomConst: {
       tokenSymbol: 'OSMO',
       seTokenSymbol: 'OSMOmars',
+      pTokenSymbol: 'pOSMOmars',
+      yTokenSymbol: 'yOSMOmars',
       bTokenSymbol: 'bOSMO',
       tokenDenom: 'uosmo',
       seTokenDenom: 'osmomars',
+      pTokenDenom: 'posmomars',
+      yTokenDenom: 'yosmomars',
       bTokenDenom: 'bosmo'
     }
   },

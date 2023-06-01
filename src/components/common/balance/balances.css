@@ -15,7 +15,7 @@
     width: 30%;
     padding: 3px;
     margin-top: 10px;
-    border-radius: 5px;
+    border-radius: 0px;
     background-color: var(--accent-color-1);
 }
 .get-balance-button:hover{

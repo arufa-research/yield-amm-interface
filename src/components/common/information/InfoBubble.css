@@ -17,7 +17,7 @@
   position: absolute;
   background: #f2545b;
   padding: 10px 20px;
-  border-radius: 15px;
+  border-radius: 0px;
   border-top-right-radius: 0;
   display: none;
   z-index: 20;
@@ -32,7 +32,7 @@
   position: absolute;
   background: var(--gradient-left);
   padding: 10px 20px;
-  border-radius: 15px;
+  border-radius: 0px;
   display: none;
   z-index: 20;
   right: -85px;
@@ -87,7 +87,7 @@
 .info-material-icon-conversion {
   font-size: 1.3rem !important;
   background-color: #f2545b;
-  border-radius: 15px;
+  border-radius: 0px;
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 100, "opsz" 24;
   cursor: pointer;
 }

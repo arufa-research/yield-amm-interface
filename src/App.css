@@ -60,7 +60,7 @@
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--secondary-bg-color);
-  border-radius: 500px;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
   filter: brightness(1.2);

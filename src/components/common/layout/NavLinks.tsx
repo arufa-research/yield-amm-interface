@@ -29,7 +29,7 @@ const NavLinks = () => {
       <NavigationButton
         icon={faArrowsSplitUpAndLeft}
         name={"Split/merge"}
-        pathName="/stats"
+        pathName="/split"
       />
       <NavigationButton
         icon={faDroplet}

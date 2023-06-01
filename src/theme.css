@@ -76,8 +76,8 @@
   --normal-font-size: 1.2rem;
   --large-font-size: 1.5rem;
   --gigantic-font-size: 3rem;
-  --standard-radius: 10px;
-  --large-radius: 20px;
+  --standard-radius: 0px;
+  --large-radius: 0px;
   --standard-font-family: "Rajdhani", Manrope, Poppins, Inter,
     PingFangSC-Regular, "Microsoft YaHei", sans-serif;
   --primary-font-color: white;

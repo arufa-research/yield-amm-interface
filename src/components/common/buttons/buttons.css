@@ -95,7 +95,7 @@
   font-weight: 600;
   font-variation-settings: "FILL" 0, "wght" 600, "GRAD" 100, "opsz" 24 !important;
   background-color: var(--site-orange);
-  border-radius: 50%;
+  border-radius: 0%;
   padding: 0px;
 }
 .logout-logo:hover {
@@ -107,7 +107,7 @@
   padding: 5px;
   width: fit-content;
   background-color: #3c404a;
-  border-radius: 10px;
+  border-radius: 0px;
   border-top-left-radius: 0;
   bottom: 0px;
   right: 0px;
@@ -162,7 +162,7 @@
 .common-button {
   width: 100%;
   padding: 5px;
-  border-radius: 15px;
+  border-radius: 0px;
   background-color: var(--accent-color-1);
   font-size: 1.3rem;
   font-family: var(--standard-font-family);
