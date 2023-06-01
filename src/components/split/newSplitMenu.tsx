@@ -32,6 +32,7 @@ import {
 import InfoBubble from "../common/information/InfoBubble";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { networkState } from "../../context/networkState";
+import { useSplit } from "../../hooks/useSplit";
 
 function NewStakeMenu(props: Props) {
   const { queryClient } = useRecoilValue(queryClientState);
@@ -60,7 +61,8 @@ function NewStakeMenu(props: Props) {
   const connectWallet = useConnectWallet();
   const token = useToken();
 
-  const { getAdapterState, doDeposit, doWithdraw } = useAdapter();
+  const { getAdapterState } = useAdapter();
+  const { doSplit, doMerge } = useSplit();
 
   const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
   const [open, setOpen] = useState(false);
@@ -73,9 +75,8 @@ function NewStakeMenu(props: Props) {
   const getStakeData = async () => {
     const seRate = await getAdapterState();
     console.log("seRate: ", seRate);
-    const bRate = await getAdapterState();
     setRate(seRate as string);
-    setBTokenRate(bRate as string);
+    setBTokenRate(seRate as string);
 
     const ybtBalance = await token.getBalance("factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars");
     const pBalance = await token.getBalance("factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/posmomars");
@@ -95,7 +96,7 @@ function NewStakeMenu(props: Props) {
     }
     props.setInputAmount("");
     getStakeData();
-  }, [queryClient, props.name, ybtBalance, address]);
+  }, [queryClient, address]);
 
   const unstakeTypeHandler = (menu: string) => {
     setUnstakeType(menu);
@@ -107,24 +108,24 @@ function NewStakeMenu(props: Props) {
 
   const doConvertHandler = async () => {
     // if (props.name === "Unstake") {
-    //   await doWithdraw(props.inputAmount as string, unit);
+    //   await doMerge(props.inputAmount as string, unit);
     // } else {
-    //   await doDeposit(props.inputAmount as string, unit);
+    //   await doSplit(props.inputAmount as string, unit);
     // }
     setIsLoading(true);
     if (valueTo === denomConst.pTokenSymbol) {
       const unit = tokenUnit.substring(0, 2);
-      await doWithdraw(props.inputAmount as string, unit);
+      await doMerge(props.inputAmount as string, unit);
     } else if (value === baseSymbol) {
       const unit = tokenUnitTo.substring(0, 2);
-      await doDeposit(props.inputAmount as string, unit);
+      await doSplit(props.inputAmount as string, unit);
     } else {
       // convert
       if(value === denomConst.pTokenSymbol){
-        await doDeposit(props.inputAmount as string, "se");
+        await doSplit(props.inputAmount as string, "se");
       }
       else{
-        await doDeposit(props.inputAmount as string, "b");
+        await doSplit(props.inputAmount as string, "b");
       }
     }
     setIsLoading(false);
@@ -268,9 +269,9 @@ function NewStakeMenu(props: Props) {
                     <img
                       src={
                         tokenUnit === denomConst.ybTokenSymbol
-                          ? OSMOmars
-                          : tokenUnit === denomConst.pTokenSymbol
                           ? pOSMOmars
+                          : tokenUnit === denomConst.pTokenSymbol
+                          ? OSMOmars
                           : bINJ
                       }
                       width={50}
@@ -478,9 +479,9 @@ function NewStakeMenu(props: Props) {
                     <img
                       src={
                         tokenUnitTo === denomConst.ybTokenSymbol
-                          ? OSMOmars
-                          : tokenUnitTo === denomConst.pTokenSymbol
                           ? pOSMOmars
+                          : tokenUnitTo === denomConst.pTokenSymbol
+                          ? OSMOmars
                           : bINJ
                       }
                       width={50}
@@ -577,7 +578,7 @@ function NewStakeMenu(props: Props) {
                         src={yOSMOmars}
                         width={50}
                         alt="img" />
-                      {valueTo}
+                      {denomConst.yTokenSymbol}
                       {openTo ? (
                         <div className="sortby-menu sortby-menu-To">
                           <div

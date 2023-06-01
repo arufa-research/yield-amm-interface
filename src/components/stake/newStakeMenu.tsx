@@ -73,9 +73,8 @@ function NewStakeMenu(props: Props) {
   const getStakeData = async () => {
     const seRate = await getAdapterState();
     console.log("seRate: ", seRate);
-    const bRate = await getAdapterState();
     setRate(seRate as string);
-    setBTokenRate(bRate as string);
+    setBTokenRate(seRate as string);
 
     const seBalance = await token.getBalance("factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars");
     const bBalance = await token.getBalance("factory/osmo1jfxslamnq8au8yz0ak2v765jthp95d5pm3e05f8yers8pdmqyxvql2uhp5/osmomars");
@@ -93,7 +92,7 @@ function NewStakeMenu(props: Props) {
     }
     props.setInputAmount("");
     getStakeData();
-  }, [queryClient, props.name, seBalance, address]);
+  }, [queryClient, address]);
 
   const unstakeTypeHandler = (menu: string) => {
     setUnstakeType(menu);
