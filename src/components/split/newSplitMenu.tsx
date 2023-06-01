@@ -4,7 +4,6 @@ import {
   SetStateAction,
   useEffect,
   useState,
-  useContext,
 } from "react";
 import "./split.css";
 
@@ -22,7 +21,7 @@ import OSMO from "../../assets/img/osmo.png";
 import bINJ from "../../assets/img/osmo.png";
 import OSMOmars from "../../assets/img/osmomars.png";
 import pOSMOmars from "../../assets/img/posmomars.png";
-import yOSMOmars from "../../assets/img/bconst_logo.png";
+import yOSMOmars from "../../assets/img/yosmomars.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
@@ -33,7 +32,6 @@ import {
 import InfoBubble from "../common/information/InfoBubble";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { networkState } from "../../context/networkState";
-import { coinConvert } from "../../utils/common";
 
 function NewStakeMenu(props: Props) {
   const { queryClient } = useRecoilValue(queryClientState);
@@ -48,7 +46,6 @@ function NewStakeMenu(props: Props) {
   const { network } = useRecoilValue(networkState);
 
   const denomConst = networkConstants[network].denomConst;
-  const baseDenom = networkConstants[network].baseDenom;
   const baseSymbol = networkConstants[network].baseSymbol;
 
   const [loading, setLoading] = useState(false);
@@ -56,8 +53,8 @@ function NewStakeMenu(props: Props) {
   const [eqAmountMessage, setEqAmountMessage] = useState("");
   const [sliderVisibility, setSliderVisibility] = useState(true);
   const [isCheckingAddress, setIsCheckingAddress] = useState(false);
-  const [tokenUnit, setTokenUnit] = useState(baseSymbol);
-  const [tokenUnitTo, setTokenUnitTo] = useState(denomConst.seTokenSymbol);
+  const [tokenUnit, setTokenUnit] = useState(denomConst.pTokenSymbol);
+  const [tokenUnitTo, setTokenUnitTo] = useState(denomConst.ybTokenSymbol);
   const [unstakeType, setUnstakeType] = useState("delayed");
   const { address, shortAddress, balance } = useRecoilValue(walletState);
   const connectWallet = useConnectWallet();
@@ -68,8 +65,8 @@ function NewStakeMenu(props: Props) {
   const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
   const [open, setOpen] = useState(false);
   const [openTo, setOpenTo] = useState(false);
-  const [value, setValue] = useState<any>(baseSymbol);
-  const [valueTo, setValueTo] = useState<any>(denomConst.seTokenSymbol);
+  const [value, setValue] = useState<any>(denomConst.pTokenSymbol);
+  const [valueTo, setValueTo] = useState<any>(denomConst.ybTokenSymbol);
   const [discarded, setDiscarded] = useState<any>(value);
   const [discardedTo, setDiscardedTo] = useState<any>(valueTo);
 
@@ -115,7 +112,7 @@ function NewStakeMenu(props: Props) {
     //   await doDeposit(props.inputAmount as string, unit);
     // }
     setIsLoading(true);
-    if (valueTo === baseSymbol) {
+    if (valueTo === denomConst.pTokenSymbol) {
       const unit = tokenUnit.substring(0, 2);
       await doWithdraw(props.inputAmount as string, unit);
     } else if (value === baseSymbol) {
@@ -123,7 +120,7 @@ function NewStakeMenu(props: Props) {
       await doDeposit(props.inputAmount as string, unit);
     } else {
       // convert
-      if(value === denomConst.seTokenSymbol){
+      if(value === denomConst.pTokenSymbol){
         await doDeposit(props.inputAmount as string, "se");
       }
       else{
@@ -153,7 +150,7 @@ function NewStakeMenu(props: Props) {
   // const handleSlideChange = (e: any) => {
   //   let curCrtBalance = Number(balance?.amount);
   //   if (props.name === "Unstake") {
-  //     if (tokenUnit === denomConst.seTokenSymbol) {
+  //     if (tokenUnit === denomConst.pTokenSymbol) {
   //       curCrtBalance = Number(ybtBalance);
   //     } else {
   //       curCrtBalance = Number(pBalance);
@@ -167,14 +164,14 @@ function NewStakeMenu(props: Props) {
   const handleMaxClick = () => {
     let curCrtBalance = Number(balance?.amount);
     if (valueTo===baseSymbol) {
-      if (tokenUnit === denomConst.seTokenSymbol) {
+      if (tokenUnit === denomConst.pTokenSymbol) {
         curCrtBalance = Number(ybtBalance);
       } else {
         curCrtBalance = Number(pBalance);
       }
     }
     if(valueTo !==baseSymbol && value !== baseSymbol){
-      if (tokenUnit === denomConst.seTokenSymbol) {
+      if (tokenUnit === denomConst.pTokenSymbol) {
         curCrtBalance = Number(ybtBalance);
       } else {
         curCrtBalance = Number(pBalance);
@@ -215,7 +212,7 @@ function NewStakeMenu(props: Props) {
     return value;
   };
 
-  const [swapToken, setSwapToken] = useState(false);
+  const [swapToken, setSwapToken] = useState(true);
 
   const handleSwitch = () => {
     handleSwitchClick();
@@ -253,9 +250,9 @@ function NewStakeMenu(props: Props) {
           <>
             <div className="stake-menu-header">
               <div className="stake-menu-heading stake-menu__item">
-                {valueTo === baseSymbol
-                  ? "Withdraw " + tokenUnit
-                  : value === baseSymbol
+                {valueTo === denomConst.pTokenSymbol
+                  ? "Merge " + denomConst.pTokenSymbol + " and " + denomConst.yTokenSymbol
+                  : value === denomConst.pTokenSymbol
                   ? props.name
                   : "Convert " + tokenUnit + " To "+ tokenUnitTo}
               </div>
@@ -270,17 +267,17 @@ function NewStakeMenu(props: Props) {
                   >
                     <img
                       src={
-                        tokenUnit === baseSymbol
-                          ? OSMO
-                          : tokenUnit === denomConst.seTokenSymbol
+                        tokenUnit === denomConst.ybTokenSymbol
                           ? OSMOmars
+                          : tokenUnit === denomConst.pTokenSymbol
+                          ? pOSMOmars
                           : bINJ
                       }
                       width={50}
                       alt="img"
                     />
-                    {props.name === `Deposit ${denomConst.tokenSymbol}`
-                      ? value
+                    {props.name === `Split ${denomConst.ybTokenSymbol}`
+                      ? valueTo
                       : props.name}
 
                     {/* <FontAwesomeIcon
@@ -289,14 +286,14 @@ function NewStakeMenu(props: Props) {
                     />  */}
                     {open ? (
                       <div className="sortby-menu">
-                        {discardedTo !== denomConst.seTokenSymbol && (
+                        {discardedTo !== denomConst.pTokenSymbol && (
                           <div
-                            onClick={() => handleChange(denomConst.seTokenSymbol)}
+                            onClick={() => handleChange(denomConst.pTokenSymbol)}
                             className={`sortby-input ${
-                              value === denomConst.seTokenSymbol ? "sortby-input__active" : ""
+                              value === denomConst.pTokenSymbol ? "sortby-input__active" : ""
                             }`}
                           >
-                            {denomConst.seTokenSymbol}
+                            {denomConst.pTokenSymbol}
                           </div>
                         )}
                         {discardedTo !== denomConst.bTokenSymbol && (
@@ -341,20 +338,20 @@ function NewStakeMenu(props: Props) {
                       {/* {props.placeholder === denomConst.tokenSymbol
                       ? props.placeholder
                       : tokenUnit} */}
-                      {tokenUnit}
+                      {tokenUnitTo}
                       {/* {denomConst.tokenSymbol} */}
                     </div>
                     <div className="input-warning-meassages">
-                      {valueTo === baseSymbol &&
+                      {valueTo === denomConst.pTokenSymbol &&
                       Number(props.inputAmount) >
-                        (tokenUnit === denomConst.seTokenSymbol
+                        (tokenUnit === denomConst.pTokenSymbol
                           ? Number(ybtBalance)
                           : Number(pBalance))
                         ? "Insufficient Balance"
                         : null}
                       {(valueTo !== baseSymbol && value !== baseSymbol) &&
                       Number(props.inputAmount) >
-                        (tokenUnit === denomConst.seTokenSymbol
+                        (tokenUnit === denomConst.pTokenSymbol
                           ? Number(ybtBalance)
                           : Number(pBalance))
                         ? "Insufficient Balance"
@@ -387,8 +384,8 @@ function NewStakeMenu(props: Props) {
                     <p>Balance : </p>
                     <span>
                       {
-                        valueTo === baseSymbol
-                        ? tokenUnit === denomConst.seTokenSymbol
+                        valueTo === denomConst.pTokenSymbol
+                        ? tokenUnit === denomConst.pTokenSymbol
                           ? (ybtBalance ? Number(ybtBalance) : 0).toFixed(4)
                           : (pBalance ? Number(pBalance) : 0).toFixed(4) || 0
                         : value === baseSymbol ?
@@ -397,7 +394,7 @@ function NewStakeMenu(props: Props) {
                             : 0
                           ).toFixed(4) || 0
                           :
-                          tokenUnit === denomConst.seTokenSymbol
+                          tokenUnit === denomConst.pTokenSymbol
                           ? (ybtBalance ? Number(ybtBalance) : 0).toFixed(4)
                           : (pBalance ? Number(pBalance) : 0).toFixed(4) || 0}
                     </span>
@@ -405,7 +402,7 @@ function NewStakeMenu(props: Props) {
                       {/* {props.placeholder === denomConst.tokenSymbol
                         ? props.placeholder
                         : tokenUnit} */}
-                      {value}
+                      {valueTo}
                     </span>
                   </div>
                 </label>
@@ -420,7 +417,7 @@ function NewStakeMenu(props: Props) {
                         src={yOSMOmars}
                         width={50}
                         alt="img" />
-                      {valueTo}
+                      {denomConst.yTokenSymbol}
                       {openTo ? (
                         <div className="sortby-menu sortby-menu-To">
                           <div
@@ -443,7 +440,7 @@ function NewStakeMenu(props: Props) {
                         placeholder={"0.00"}
                         value={getReceiveValue()} />
                       <div className="stake-input-unit">
-                        {tokenUnitTo}
+                        {denomConst.yTokenSymbol}
                       </div>
                     </div>
                   </div><label
@@ -456,7 +453,7 @@ function NewStakeMenu(props: Props) {
                           {(yBalance ? Number(yBalance) : 0).toFixed(4)}
                         </span>
                         <span>
-                          {valueTo}
+                          {denomConst.yTokenSymbol}
                         </span>
                       </div>
                     </label></>
@@ -480,31 +477,28 @@ function NewStakeMenu(props: Props) {
                   >
                     <img
                       src={
-                        tokenUnitTo === baseSymbol
-                          ? OSMO
-                          : tokenUnitTo === denomConst.seTokenSymbol
+                        tokenUnitTo === denomConst.ybTokenSymbol
                           ? OSMOmars
+                          : tokenUnitTo === denomConst.pTokenSymbol
+                          ? pOSMOmars
                           : bINJ
                       }
                       width={50}
                       alt="img"
                     />
-                    {/* {tokenUnit == denomConst.seTokenSymbol ? denomConst.seTokenSymbol : denomConst.bTokenSymbol} */}
-                    {valueTo}
-                    {/* <FontAwesomeIcon
-                      className="coinselecticon"
-                      icon={faCaretDown}
-                    /> */}
+                    {swapToken === false
+                      ? denomConst.ybTokenSymbol
+                      : denomConst.pTokenSymbol}
                     {openTo ? (
                       <div className="sortby-menu sortby-menu-To">
-                        {discarded !== denomConst.seTokenSymbol && (
+                        {discarded !== denomConst.pTokenSymbol && (
                           <div
-                            onClick={() => handleChangeTo(denomConst.seTokenSymbol)}
+                            onClick={() => handleChangeTo(denomConst.pTokenSymbol)}
                             className={`sortby-input ${
-                              valueTo === denomConst.seTokenSymbol ? "sortby-input__active" : ""
+                              valueTo === denomConst.ybTokenSymbol ? "sortby-input__active" : ""
                             }`}
                           >
-                            {denomConst.seTokenSymbol}
+                            {denomConst.pTokenSymbol}
                           </div>
                         )}
 
@@ -523,7 +517,7 @@ function NewStakeMenu(props: Props) {
                           <div
                             onClick={() => handleChangeTo(baseSymbol)}
                             className={`sortby-input ${
-                              valueTo === baseSymbol ? "sortby-input__active" : ""
+                              valueTo === denomConst.pTokenSymbol ? "sortby-input__active" : ""
                             }`}
                           >
                             {baseSymbol}
@@ -544,10 +538,12 @@ function NewStakeMenu(props: Props) {
                       value={getReceiveValue()}
                     />
                     <div className="stake-input-unit">
-                      {/* {props.name === `Deposit ${denomConst.tokenSymbol}`
+                      {/* {props.name === `Merge ${denomConst.tokenSymbol}`
                       ? tokenUnit
                       : denomConst.tokenSymbol} */}
-                      {tokenUnitTo}
+                      {swapToken === false
+                      ? denomConst.ybTokenSymbol
+                      : denomConst.pTokenSymbol}
                     </div>
                   </div>
                 </div>
@@ -559,41 +555,14 @@ function NewStakeMenu(props: Props) {
                   <div className="available-balance-prompt">
                     <p>Balance : </p>
                     <span>
-                      {value === baseSymbol
-                        ? tokenUnitTo === denomConst.seTokenSymbol
+                      {value === denomConst.ybTokenSymbol
                           ? (ybtBalance ? Number(ybtBalance) : 0).toFixed(4)
-                          : (pBalance ? Number(pBalance) : 0).toFixed(4) || 0
-                        : valueTo === baseSymbol
-                        ? (balance?.amount
-                            ? // ? Number(balance?.amount)
-                              Number(
-                                  balance?.amount as string
-                              )
-                            : 0
-                          ).toFixed(4) || 0
-                        : tokenUnitTo === denomConst.seTokenSymbol
-                        ? (ybtBalance ? Number(ybtBalance) : 0).toFixed(4)
-                        : (pBalance ? Number(pBalance) : 0).toFixed(4) || 0}
+                          : (pBalance ? Number(pBalance) : 0).toFixed(4)}
                     </span>
-                    {/* <div className="icc-balance-wrapper">
-                        <div className="wrapper-para">In Wallet</div>:{" "}
-                            {!address ? (
-                            "-"
-                            ) : (
-                            <GetBalance
-                                // token={activeToken}
-                                token={junoUnit}
-                                fetchBal={activeCoinBalanceHandler}
-                                customCss="height-get-balance"
-                                // settokenBal={settoken1bal ? settoken1bal : () => {}}
-                            />
-                            )}
-                    </div> */}
                     <span>
-                      {/* {props.placeholder === denomConst.tokenDenom
-                        ? props.placeholder
-                        : junoUnit} */}
-                      {valueTo}
+                      {swapToken === false
+                      ? denomConst.ybTokenSymbol
+                      : denomConst.pTokenSymbol}
                     </span>
                   </div>
                 </label>
@@ -631,7 +600,7 @@ function NewStakeMenu(props: Props) {
                         placeholder={"0.00"}
                         value={getReceiveValue()} />
                       <div className="stake-input-unit">
-                        {tokenUnitTo}
+                        {denomConst.yTokenSymbol}
                       </div>
                     </div>
                   </div><label
@@ -644,7 +613,7 @@ function NewStakeMenu(props: Props) {
                           {(yBalance ? Number(yBalance) : 0).toFixed(4)}
                         </span>
                         <span>
-                          {valueTo}
+                          {denomConst.yTokenSymbol}
                         </span>
                       </div>
                     </label></>
@@ -675,28 +644,25 @@ function NewStakeMenu(props: Props) {
             <div className="stake-rate new-stake-rate stake-menu__item">
               <div>EXCHANGE RATE</div>
               <div className="rate-flexbox">
-                { (value === baseSymbol || valueTo === baseSymbol) 
+                { (value === denomConst.pTokenSymbol || valueTo === denomConst.pTokenSymbol) 
                 ?
                 <>
                   <div className="available-balance-prompt rate-prompt">
                   <span>1</span>{" "}
-                  <span>{value === baseSymbol ? valueTo : value}</span>
+                  <span>{value === denomConst.pTokenSymbol ? valueTo : value}</span>
                 </div>
                 =
                 <div className="available-balance-prompt rate-prompt">
                   <span>
-                    {/* {tokenUnit === denomConst.seTokenSymbol
-              ? Number(rate).toFixed(5)
-              : Number(bTokenRate).toFixed(6)} */}
                     {value === baseSymbol
-                      ? valueTo === denomConst.seTokenSymbol
+                      ? valueTo === denomConst.ybTokenSymbol
                         ? Number(rate).toFixed(5)
                         : Number(bTokenRate).toFixed(6)
-                      : value === denomConst.seTokenSymbol
+                      : value === denomConst.pTokenSymbol
                       ? Number(rate).toFixed(5)
                       : Number(bTokenRate).toFixed(6)}
                   </span>{" "}
-                  <span>{baseSymbol}</span>
+                  <span>{value === denomConst.pTokenSymbol ? value : valueTo}</span>
                 </div>
                 </>
                 :
@@ -704,15 +670,15 @@ function NewStakeMenu(props: Props) {
                 {value === denomConst.bTokenSymbol &&
             `1 ${denomConst.bTokenSymbol} ≈ ${
               (Number(bTokenRate) / Number(rate)).toLocaleString()
-            } ${denomConst.seTokenSymbol} ≈ ${
+            } ${denomConst.pTokenSymbol} ≈ ${
               "$" +
               (
                 (Number(bTokenRate) / Number(rate)) *
                 1
               ).toFixed(5)
             }`}
-          {value === denomConst.seTokenSymbol &&
-            ` 1 ${denomConst.seTokenSymbol} ≈ ${
+          {value === denomConst.pTokenSymbol &&
+            ` 1 ${denomConst.pTokenSymbol} ≈ ${
               (Number(rate) / Number(bTokenRate)).toLocaleString()
             } ${denomConst.bTokenSymbol} ≈ ${
               "$" +
@@ -741,7 +707,7 @@ function NewStakeMenu(props: Props) {
                   isCheckingAddress ||
                   (valueTo===baseSymbol &&
                     Number(props.inputAmount) >
-                      (tokenUnit === denomConst.seTokenSymbol
+                      (tokenUnit === denomConst.pTokenSymbol
                         ? Number(ybtBalance)
                         : Number(pBalance))) ||
                   (value===baseSymbol &&
@@ -751,7 +717,7 @@ function NewStakeMenu(props: Props) {
                     (
                       (value !==baseSymbol && valueTo !==baseSymbol) &&
                       Number(props.inputAmount) >
-                      (tokenUnit === denomConst.seTokenSymbol
+                      (tokenUnit === denomConst.pTokenSymbol
                         ? Number(ybtBalance)
                         : Number(pBalance))
                     )
@@ -763,9 +729,9 @@ function NewStakeMenu(props: Props) {
                   ? "Validating address..."
                   : loading
                   ? "Loading..."
-                  : valueTo === baseSymbol
-                  ? "Withdraw " + tokenUnit
-                  : value === baseSymbol
+                  : valueTo === denomConst.pTokenSymbol
+                  ? "Merge " + tokenUnit
+                  : value === denomConst.pTokenSymbol
                   ? props.name
                   : "Convert"}
                 {/* {isCheckingAddress
@@ -773,7 +739,7 @@ function NewStakeMenu(props: Props) {
                   : loading
                   ? "Loading..."
                   : props.name === "Unstake"
-                  ? "Withdraw " + tokenUnit
+                  ? "Merge " + tokenUnit
                   : props.name} */}
               </button>
             ) : (

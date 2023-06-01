@@ -15,7 +15,7 @@ function StakeInputSlider(props: any) {
   const handleNodeClick = (e: any) => {
     let curCrtBalance = Number(balance?.amount);
     if (props.name === "Unstake") {
-      if (props.junoUnit === denomConst.seTokenSymbol) {
+      if (props.junoUnit === denomConst.ybTokenSymbol) {
         curCrtBalance = Number(props.seBalance);
       } else {
         curCrtBalance = Number(props.bBalance);
@@ -30,7 +30,7 @@ function StakeInputSlider(props: any) {
   const handleSlideChange = (e: any) => {
     let curCrtBalance = Number(balance?.amount);
     if (props.name === "Unstake") {
-      if (props.junoUnit === denomConst.seTokenSymbol) {
+      if (props.junoUnit === denomConst.ybTokenSymbol) {
         curCrtBalance = Number(props.seBalance);
       } else {
         curCrtBalance = Number(props.bBalance);

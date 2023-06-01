@@ -54,7 +54,7 @@ function NewStakeMenu(props: Props) {
   const [sliderVisibility, setSliderVisibility] = useState(true);
   const [isCheckingAddress, setIsCheckingAddress] = useState(false);
   const [tokenUnit, setTokenUnit] = useState(baseSymbol);
-  const [tokenUnitTo, setTokenUnitTo] = useState(denomConst.seTokenSymbol);
+  const [tokenUnitTo, setTokenUnitTo] = useState(denomConst.ybTokenSymbol);
   const [unstakeType, setUnstakeType] = useState("delayed");
   const { address, shortAddress, balance } = useRecoilValue(walletState);
   const connectWallet = useConnectWallet();
@@ -66,7 +66,7 @@ function NewStakeMenu(props: Props) {
   const [open, setOpen] = useState(false);
   const [openTo, setOpenTo] = useState(false);
   const [value, setValue] = useState<any>(baseSymbol);
-  const [valueTo, setValueTo] = useState<any>(denomConst.seTokenSymbol);
+  const [valueTo, setValueTo] = useState<any>(denomConst.ybTokenSymbol);
   const [discarded, setDiscarded] = useState<any>(value);
   const [discardedTo, setDiscardedTo] = useState<any>(valueTo);
 
@@ -118,7 +118,7 @@ function NewStakeMenu(props: Props) {
       await doDeposit(props.inputAmount as string, unit);
     } else {
       // convert
-      if(value === denomConst.seTokenSymbol){
+      if(value === denomConst.ybTokenSymbol){
         await doDeposit(props.inputAmount as string, "se");
       }
       else{
@@ -148,7 +148,7 @@ function NewStakeMenu(props: Props) {
   // const handleSlideChange = (e: any) => {
   //   let curCrtBalance = Number(balance?.amount);
   //   if (props.name === "Unstake") {
-  //     if (tokenUnit === denomConst.seTokenSymbol) {
+  //     if (tokenUnit === denomConst.ybTokenSymbol) {
   //       curCrtBalance = Number(seBalance);
   //     } else {
   //       curCrtBalance = Number(bBalance);
@@ -162,14 +162,14 @@ function NewStakeMenu(props: Props) {
   const handleMaxClick = () => {
     let curCrtBalance = Number(balance?.amount);
     if (valueTo===baseSymbol) {
-      if (tokenUnit === denomConst.seTokenSymbol) {
+      if (tokenUnit === denomConst.ybTokenSymbol) {
         curCrtBalance = Number(seBalance);
       } else {
         curCrtBalance = Number(bBalance);
       }
     }
     if(valueTo !==baseSymbol && value !== baseSymbol){
-      if (tokenUnit === denomConst.seTokenSymbol) {
+      if (tokenUnit === denomConst.ybTokenSymbol) {
         curCrtBalance = Number(seBalance);
       } else {
         curCrtBalance = Number(bBalance);
@@ -267,7 +267,7 @@ function NewStakeMenu(props: Props) {
                       src={
                         tokenUnit === baseSymbol
                           ? OSMO
-                          : tokenUnit === denomConst.seTokenSymbol
+                          : tokenUnit === denomConst.ybTokenSymbol
                           ? OSMOmars
                           : bINJ
                       }
@@ -284,14 +284,14 @@ function NewStakeMenu(props: Props) {
                     /> */}
                     {open ? (
                       <div className="sortby-menu">
-                        {discardedTo !== denomConst.seTokenSymbol && (
+                        {discardedTo !== denomConst.ybTokenSymbol && (
                           <div
-                            onClick={() => handleChange(denomConst.seTokenSymbol)}
+                            onClick={() => handleChange(denomConst.ybTokenSymbol)}
                             className={`sortby-input ${
-                              value === denomConst.seTokenSymbol ? "sortby-input__active" : ""
+                              value === denomConst.ybTokenSymbol ? "sortby-input__active" : ""
                             }`}
                           >
-                            {denomConst.seTokenSymbol}
+                            {denomConst.ybTokenSymbol}
                           </div>
                         )}
                         {discardedTo !== denomConst.bTokenSymbol && (
@@ -342,14 +342,14 @@ function NewStakeMenu(props: Props) {
                     <div className="input-warning-meassages">
                       {valueTo === baseSymbol &&
                       Number(props.inputAmount) >
-                        (tokenUnit === denomConst.seTokenSymbol
+                        (tokenUnit === denomConst.ybTokenSymbol
                           ? Number(seBalance)
                           : Number(bBalance))
                         ? "Insufficient Balance"
                         : null}
                       {(valueTo !== baseSymbol && value !== baseSymbol) &&
                       Number(props.inputAmount) >
-                        (tokenUnit === denomConst.seTokenSymbol
+                        (tokenUnit === denomConst.ybTokenSymbol
                           ? Number(seBalance)
                           : Number(bBalance))
                         ? "Insufficient Balance"
@@ -383,7 +383,7 @@ function NewStakeMenu(props: Props) {
                     <span>
                       {
                         valueTo === baseSymbol
-                        ? tokenUnit === denomConst.seTokenSymbol
+                        ? tokenUnit === denomConst.ybTokenSymbol
                           ? (seBalance ? Number(seBalance) : 0).toFixed(4)
                           : (bBalance ? Number(bBalance) : 0).toFixed(4) || 0
                         : value === baseSymbol ?
@@ -392,7 +392,7 @@ function NewStakeMenu(props: Props) {
                             : 0
                           ).toFixed(4) || 0
                           :
-                          tokenUnit === denomConst.seTokenSymbol
+                          tokenUnit === denomConst.ybTokenSymbol
                           ? (seBalance ? Number(seBalance) : 0).toFixed(4)
                           : (bBalance ? Number(bBalance) : 0).toFixed(4) || 0}
                     </span>
@@ -438,14 +438,14 @@ function NewStakeMenu(props: Props) {
                       src={
                         tokenUnitTo === baseSymbol
                           ? OSMO
-                          : tokenUnitTo === denomConst.seTokenSymbol
+                          : tokenUnitTo === denomConst.ybTokenSymbol
                           ? OSMOmars
                           : bINJ
                       }
                       width={50}
                       alt="img"
                     />
-                    {/* {tokenUnit == denomConst.seTokenSymbol ? denomConst.seTokenSymbol : denomConst.bTokenSymbol} */}
+                    {/* {tokenUnit == denomConst.ybTokenSymbol ? denomConst.ybTokenSymbol : denomConst.bTokenSymbol} */}
                     {valueTo}
                     {/* <FontAwesomeIcon
                       className="coinselecticon"
@@ -453,14 +453,14 @@ function NewStakeMenu(props: Props) {
                     /> */}
                     {openTo ? (
                       <div className="sortby-menu sortby-menu-To">
-                        {discarded !== denomConst.seTokenSymbol && (
+                        {discarded !== denomConst.ybTokenSymbol && (
                           <div
-                            onClick={() => handleChangeTo(denomConst.seTokenSymbol)}
+                            onClick={() => handleChangeTo(denomConst.ybTokenSymbol)}
                             className={`sortby-input ${
-                              valueTo === denomConst.seTokenSymbol ? "sortby-input__active" : ""
+                              valueTo === denomConst.ybTokenSymbol ? "sortby-input__active" : ""
                             }`}
                           >
-                            {denomConst.seTokenSymbol}
+                            {denomConst.ybTokenSymbol}
                           </div>
                         )}
 
@@ -516,7 +516,7 @@ function NewStakeMenu(props: Props) {
                     <p>Balance : </p>
                     <span>
                       {value === baseSymbol
-                        ? tokenUnitTo === denomConst.seTokenSymbol
+                        ? tokenUnitTo === denomConst.ybTokenSymbol
                           ? (seBalance ? Number(seBalance) : 0).toFixed(4)
                           : (bBalance ? Number(bBalance) : 0).toFixed(4) || 0
                         : valueTo === baseSymbol
@@ -527,7 +527,7 @@ function NewStakeMenu(props: Props) {
                               )
                             : 0
                           ).toFixed(4) || 0
-                        : tokenUnitTo === denomConst.seTokenSymbol
+                        : tokenUnitTo === denomConst.ybTokenSymbol
                         ? (seBalance ? Number(seBalance) : 0).toFixed(4)
                         : (bBalance ? Number(bBalance) : 0).toFixed(4) || 0}
                     </span>
@@ -589,14 +589,14 @@ function NewStakeMenu(props: Props) {
                 =
                 <div className="available-balance-prompt rate-prompt">
                   <span>
-                    {/* {tokenUnit === denomConst.seTokenSymbol
+                    {/* {tokenUnit === denomConst.ybTokenSymbol
               ? Number(rate).toFixed(5)
               : Number(bTokenRate).toFixed(6)} */}
                     {value === baseSymbol
-                      ? valueTo === denomConst.seTokenSymbol
+                      ? valueTo === denomConst.ybTokenSymbol
                         ? Number(rate).toFixed(5)
                         : Number(bTokenRate).toFixed(6)
-                      : value === denomConst.seTokenSymbol
+                      : value === denomConst.ybTokenSymbol
                       ? Number(rate).toFixed(5)
                       : Number(bTokenRate).toFixed(6)}
                   </span>{" "}
@@ -608,15 +608,15 @@ function NewStakeMenu(props: Props) {
                 {value === denomConst.bTokenSymbol &&
             `1 ${denomConst.bTokenSymbol} ≈ ${
               (Number(bTokenRate) / Number(rate)).toLocaleString()
-            } ${denomConst.seTokenSymbol} ≈ ${
+            } ${denomConst.ybTokenSymbol} ≈ ${
               "$" +
               (
                 (Number(bTokenRate) / Number(rate)) *
                 1
               ).toFixed(5)
             }`}
-          {value === denomConst.seTokenSymbol &&
-            ` 1 ${denomConst.seTokenSymbol} ≈ ${
+          {value === denomConst.ybTokenSymbol &&
+            ` 1 ${denomConst.ybTokenSymbol} ≈ ${
               (Number(rate) / Number(bTokenRate)).toLocaleString()
             } ${denomConst.bTokenSymbol} ≈ ${
               "$" +
@@ -645,7 +645,7 @@ function NewStakeMenu(props: Props) {
                   isCheckingAddress ||
                   (valueTo===baseSymbol &&
                     Number(props.inputAmount) >
-                      (tokenUnit === denomConst.seTokenSymbol
+                      (tokenUnit === denomConst.ybTokenSymbol
                         ? Number(seBalance)
                         : Number(bBalance))) ||
                   (value===baseSymbol &&
@@ -655,7 +655,7 @@ function NewStakeMenu(props: Props) {
                     (
                       (value !==baseSymbol && valueTo !==baseSymbol) &&
                       Number(props.inputAmount) >
-                      (tokenUnit === denomConst.seTokenSymbol
+                      (tokenUnit === denomConst.ybTokenSymbol
                         ? Number(seBalance)
                         : Number(bBalance))
                     )

@@ -61,7 +61,7 @@ function NewExchange() {
       {stake ? (
         <NewStakeMenu
           isConvert={convert}
-          name={`Deposit ${networkConstants[network].denomConst.tokenSymbol}`}
+          name={`Split ${networkConstants[network].denomConst.ybTokenSymbol}`}
           placeholder={networkConstants[network].baseDenom}
           inputAmount={inputAmount}
           setInputAmount={(e) => {
