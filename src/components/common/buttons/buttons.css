@@ -24,11 +24,12 @@
   /* background-color: var(--accent-color-1); */
   background: linear-gradient(to right, var(--gradient-left), var(--gradient-right));
   border-radius: var(--standard-radius);
-  color: var(--primary-font-color);
+  /* color: var(--primary-font-color); */
 }
 .nav-link-button__active:hover {
   transition: none;
-  color: var(--secondary-font-color);
+  /* font-weight: 200; */
+  /* color: var(--secondary-font-color); */
 }
 
 /* ****************************************************************************************************************************** */

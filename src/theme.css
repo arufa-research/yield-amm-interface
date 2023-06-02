@@ -59,14 +59,14 @@
   --accent-color-1:#9CE451;
   --percent-input: #4CB3A0; */
 
-  --primary-bg-color: #1A1B3D;
-  --secondary-bg-color: #f3f7f0;
-  --accent-color-1: #8041D2;
-  --card-background:#423B5A;
+  --primary-bg-color: #1c3034;
+  --secondary-bg-color: #164242;
+  --accent-color-1: #09a758;
+  --card-background: #49596a;
 
   --bg-img: url(./assets/img/fixedFiBackgroundDark.png);
-  --gradient-left: #8A32C7;
-  --gradient-right: #6B5DE4;
+  --gradient-left: #164242;
+  --gradient-right: #164242;
 
   --accent-color-2: #da6e4f;
   --accent-color-3: #962f22;

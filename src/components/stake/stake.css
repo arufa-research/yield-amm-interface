@@ -162,7 +162,7 @@
 }
 .stake-rate {
   padding: 0.6rem;
-  background: var(--primary-bg-color);
+  background: none;
   border-radius: 0px;
   display: flex;
   width: auto;
@@ -272,24 +272,24 @@
 }
 .label-logo-action-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   gap: 5px;
   color: var(--primary-font-color);
   font-weight: bold;
   margin-left: 10px;
 
-  border: 1px solid var(--card-background);
+  /* border: 1px solid var(--card-background); */
   padding: 10px;
   border-radius: 0px;
   width: 30%;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
-.label-logo-action-wrapper:hover{
+/* .label-logo-action-wrapper:hover{
   cursor: pointer;
   background-color: var(--card-background);
-}
+} */
 
 .converted-bubble-container {
   position: relative;
@@ -352,12 +352,14 @@
 }
 .rate-prompt span:nth-child(1) {
   font-size: 1.1rem;
+  font-weight: bold !important;
   color: var(--primary-font-color);
   font-family: "Rajdhani", sans-serif;
 }
 .rate-prompt span:nth-child(2) {
   font-size: 0.9rem;
-  color: #7e818b;
+  font-weight: normal !important;
+  color: var(--primary-font-color) !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .scale-balance-wrapper {

@@ -92,7 +92,7 @@
   /* background-color: var(--secondary-bg-color); */
   background-image: linear-gradient(to top, var(--gradient-left) ,var(--gradient-right));
   border: 2px solid black;
-  border-radius: 0%;
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;

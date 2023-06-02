@@ -7,6 +7,7 @@ import {
   useContext,
 } from "react";
 import "./stake.css";
+import "./convert.css";
 
 import { networkConstants } from "../../utils/constants";
 import { walletState } from "../../context/walletState";
@@ -365,20 +366,20 @@ function NewStakeMenu(props: Props) {
                   </div>
                 </div>
 
-                {balance?.amount && sliderVisibility && (
+                {/* {balance?.amount && sliderVisibility && (
                   <button
                     className="max-btn new-max-btn"
                     onClick={handleMaxClick}
                   >
                     Max
                   </button>
-                )}
+                )} */}
                 <label
                   className="input-label stake-label new-stake-label"
                   htmlFor="stake-juno-input"
                 >
                   <div className="available-balance-prompt">
-                    <p>Balance : </p>
+                    <p>Balance: </p>
                     <span>
                       {
                         valueTo === baseSymbol
@@ -512,7 +513,7 @@ function NewStakeMenu(props: Props) {
                   htmlFor="stake-scrt-input"
                 >
                   <div className="available-balance-prompt">
-                    <p>Balance : </p>
+                    <p>Balance: </p>
                     <span>
                       {value === baseSymbol
                         ? tokenUnitTo === denomConst.ybTokenSymbol
@@ -576,7 +577,7 @@ function NewStakeMenu(props: Props) {
               // />
             )} */}
             <div className="stake-rate new-stake-rate stake-menu__item">
-              <div>EXCHANGE RATE</div>
+              <div></div>
               <div className="rate-flexbox">
                 { (value === baseSymbol || valueTo === baseSymbol) 
                 ?
