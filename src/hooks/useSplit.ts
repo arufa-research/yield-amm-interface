@@ -171,11 +171,11 @@ export const useSplit = () => {
           transferAmount: [ // send pToken and yToken here, TODO: remove hardcoded denom
             {
               amount: coinConvert(tokenAmount, 6, "machine"),
-              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/yosmomars",
+              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/posmomars",
             },
             {
               amount: coinConvert(tokenAmount, 6, "machine"),
-              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/posmomars",
+              denom: "factory/osmo1f9krjhw2umx5fv4rerxfksafljwejrwwej28sslsm0s3qswgst7qhjncmf/yosmomars",
             },
           ],
         },

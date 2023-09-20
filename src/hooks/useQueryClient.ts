@@ -1,3 +1,4 @@
+import { osmosis } from "osmojs";
 import { useSetRecoilState } from "recoil";
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
@@ -12,10 +13,14 @@ export const useQueryClient = () => {
     const queryClient = await CosmWasmClient.connect(
       chainInfo.getRpcUrl(),
     );
+    const osmoClient = await osmosis.ClientFactory.createLCDClient(
+      { restEndpoint: chainInfo.getRestUrl() }
+    );
 
     /* successfully update the query client state */
     setQueryClientState({
       queryClient: queryClient,
+      osmoClient: osmoClient,
     });
   };
 };
